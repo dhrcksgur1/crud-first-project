@@ -24,10 +24,14 @@ public class Comment extends BaseTime{
     @Column(length = 1000)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(nullable = false)
-    private LocalDateTime date;
+
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @Column(nullable = false)
+//    private LocalDateTime date;
 
 //    private String writer;
 

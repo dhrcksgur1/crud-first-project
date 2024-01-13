@@ -22,18 +22,18 @@ public class Post extends BaseTime{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @Column(nullable = false)
-//    private Date date;
+    @ManyToOne
+    @JoinColumn(name="board_id")
+    private Board board;
 
-//    private String writer;
+    @ManyToOne
+    @JoinColumn(name="comment_id")
+    private Comment comment;
 
     @Builder //builder 클래스 자동 생성> 생성자 대신 사용
-    public Post(Long postId, String title, String content, String writer){
+    public Post(Long postId, String title, String content){
         this.postId = postId;
         this.title = title;
         this.content = content;
-//        this.date = date;
-//        this.writer = writer;
     }
 }

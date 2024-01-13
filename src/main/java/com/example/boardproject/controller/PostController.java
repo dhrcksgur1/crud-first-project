@@ -1,29 +1,27 @@
 package com.example.boardproject.controller;
 
-import com.example.boardproject.repository.PostRepository;
+import com.example.boardproject.domain.Post;
+import com.example.boardproject.service.PostService;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Controller
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/post")
 public class PostController {
-    @Autowired //의존성 주입
-    PostRepository postRepository;
 
-    @GetMapping
-    public String test(){
-        return "Hello World!";
+
+    private final PostService postService;
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
-//    //글 상세보기
-//    @PostMapping
-//    public String
-//
-//    //글 작성
-//
-//    //글 수정
-//
-//    // 글 삭제
+
+
 }

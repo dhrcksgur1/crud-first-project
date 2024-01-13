@@ -13,7 +13,6 @@ public class PostDto {
     private Long postId;
     private String title;
     private String content;
-//    private Date date;
 
     //dto -> entity DB등록
     @Builder
@@ -22,8 +21,7 @@ public class PostDto {
                 .postId(postId)
                 .title(title)
                 .content(content)
-//                .date(date)
                 .build();
-    }//https://tmdrl5779.tistory.com/51
+    }
 }
 

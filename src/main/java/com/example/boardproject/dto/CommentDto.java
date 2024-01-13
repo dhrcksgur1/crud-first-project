@@ -16,17 +16,16 @@ public class CommentDto {
 
     private Long commentID;
     private String content;
-    private Date date;
+//    private Date date;
 
     @Builder
     public Comment toEntity(){
         return Comment.builder()
                 .commentId(commentID)
-                .date(date)
+//                .date(date)
                 .content(content)
                 .build();
-
-    }//https://tmdrl5779.tistory.com/51
+    }
 }
 
 
