@@ -2,53 +2,62 @@ package com.example.boardproject.service;
 
 import com.example.boardproject.domain.Board;
 import com.example.boardproject.dto.BoardDto;
+import com.example.boardproject.global.exception.ExceptionCode;
+import com.example.boardproject.global.exception.ServiceLogicException;
 import com.example.boardproject.repository.BoardRepository;
-import jakarta.persistence.EntityNotFoundException;//추가
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Slf4j
 public class BoardService {
 
-    @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
+    private Board foundBoard;
 
-    public List<Board> getAllBoards() {
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
+    public List<Board> findBoards() {
         return boardRepository.findAll();
     }
 
-    public Board getBoardById(Long id) {
+    public Board findBoardById(Long id) {
         return boardRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Board not found with id: " + id));
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
     }
+    // 게시판 생성 메서드
 
     public Board createBoard(Board board) {
-        // Additional validation if needed
-        return boardRepository.save(board);
+        return boardRepository.create(board);
     }
+    // 게시판 수정 메서드
 
-//    public Board updateBoard(Long id, Board updatedBoard) {
-//        Board existingBoard = getBoardById(id);
-//
-//        existingBoard.setTitle(updatedBoard.getTitle());
-//        existingBoard.setContent(updatedBoard.getContent());
-//
-//        return boardRepository.save(existingBoard);
-//    }
+    public Board updateBoard(BoardDto board) {
+        foundBoard = boardRepository.findById(board.getId())
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
+
+        Optional.ofNullable(board.getName())
+                .ifPresent(name -> { foundBoard = foundBoard.toBuilder().name(name).build(); });
+
+        foundBoard = foundBoard.toBuilder().description(board.getDescription()).build();
+
+        return boardRepository.update(foundBoard);
+    }
+    // 게시판 삭제 메서드
 
     public void deleteBoard(Long id) {
-        Board board = getBoardById(id);
-        boardRepository.delete(board);
+        // id를 사용하여 게시판을 찾기
+        foundBoard = boardRepository.findById(id)
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
+        // 해당 게시판 삭제
+        boardRepository.delete(foundBoard);
     }
+
 }

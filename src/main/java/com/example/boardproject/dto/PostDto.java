@@ -14,14 +14,5 @@ public class PostDto {
     private String title;
     private String content;
 
-    //dto -> entity DB등록
-    @Builder
-    public Post toEntity(){
-        return Post.builder()
-                .postId(postId)
-                .title(title)
-                .content(content)
-                .build();
-    }
 }
 

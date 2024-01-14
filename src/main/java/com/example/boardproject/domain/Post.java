@@ -14,7 +14,7 @@ import java.sql.Date;
 public class Post extends BaseTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// 값이 없어도 자동 할당
-    private Long postId;
+    private Long id;
 
     @Column(length = 255, nullable = false)
     private String title;
@@ -23,16 +23,17 @@ public class Post extends BaseTime{
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="board_id")
+    @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 
-    @ManyToOne
-    @JoinColumn(name="comment_id")
-    private Comment comment;
+    //why불필요?
+//    @ManyToOne
+//    @JoinColumn(name="comment_id")
+//    private Comment comment;
 
     @Builder //builder 클래스 자동 생성> 생성자 대신 사용
-    public Post(Long postId, String title, String content){
-        this.postId = postId;
+    public Post(Board board, String title, String content){//Board board 공부
+        this.board = board;
         this.title = title;
         this.content = content;
     }

@@ -29,18 +29,10 @@ public class Comment extends BaseTime{
     private Post post;
 
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @Column(nullable = false)
-//    private LocalDateTime date;
-
-//    private String writer;
-
     @Builder //builder 클래스 자동 생성> 생성자 대신 사용
     public Comment(Long commentId, String content, Date date ,String writer){
         this.commentId = commentId;
         this.content = content;
-//        this.date = date;
-//        this.writer = writer;
     }
 
 }
