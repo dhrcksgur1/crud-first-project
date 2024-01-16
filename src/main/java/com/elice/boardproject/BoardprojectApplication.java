@@ -17,9 +17,6 @@ public class BoardprojectApplication {
 		SpringApplication.run(BoardprojectApplication.class, args);
 	}
 
-
-
-	
 	@Bean
 	@Profile("local")
 	public DataInit stubDataInit(BoardRepository boardRepository, PostRepository postRepository, CommentRepository commentRepository) {

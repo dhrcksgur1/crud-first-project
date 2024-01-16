@@ -44,7 +44,7 @@ public class BoardController {
      comment 키워드 검색 기능 추가
      */
     @GetMapping("/{boardId}")
-    public String getBoard(@PathVariable Long boardId,
+    public String getBoard(@PathVariable(name = "boardId") Long boardId,
                            @RequestParam(defaultValue = "0") int page,
                            @RequestParam(defaultValue = "10") int size,
                            @RequestParam(required = false) String keyword,
@@ -72,7 +72,7 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}/edit")
-    public String editBoard(@PathVariable Long boardId, Model model) {
+    public String editBoard(@PathVariable(name = "boardId") Long boardId, Model model) {
         Board board = boardService.findBoardById(boardId);
         model.addAttribute("board", board);
 
@@ -81,7 +81,7 @@ public class BoardController {
 
     @PostMapping("/{boardId}/edit")
     public String editBoardPost(
-        @PathVariable Long boardId,
+        @PathVariable(name = "boardId") Long boardId,
         @ModelAttribute BoardPostDto boardPostDto
     ) {
         boardService.updateBoard(boardId, boardPostDto);
@@ -90,7 +90,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/{boardId}/delete")
-    public String deleteBoard(@PathVariable Long boardId) {
+    public String deleteBoard(@PathVariable(name = "boardId") Long boardId) {
         boardService.deleteBoard(boardId);
 
         return "redirect:/boards";
