@@ -47,9 +47,9 @@ public class DataInit {
         Post post = postRepository.findById(1L).orElseThrow(() -> new RuntimeException());
         Post post2 = postRepository.findById(12L).orElseThrow(() -> new RuntimeException());
 
-        commentRepository.save(new Comment(post, "안녕하세요. 모니터 팔렸나요?"));
-        commentRepository.save(new Comment(post, "모니터 제가 사고 싶어요."));
-        commentRepository.save(new Comment(post2, "스테비아 토마토 심는 방법을 알려주세요!"));
-        commentRepository.save(new Comment(post2, "자바의 정석 추천합니다."));
+//        commentRepository.save(new Comment(post, "안녕하세요. 모니터 팔렸나요?"));
+//        commentRepository.save(new Comment(post, "모니터 제가 사고 싶어요."));
+//        commentRepository.save(new Comment(post2, "스테비아 토마토 심는 방법을 알려주세요!"));
+//        commentRepository.save(new Comment(post2, "자바의 정석 추천합니다."));
     }
 }
