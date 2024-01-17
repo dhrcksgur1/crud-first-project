@@ -19,6 +19,4 @@ public class BoardprojectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BoardprojectApplication.class, args);
 	}
-
-
 }
