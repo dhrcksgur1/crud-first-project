@@ -8,6 +8,8 @@ import com.elice.boardproject.global.exception.ServiceLogicException;
 import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.post.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,10 @@ public class CommentService {
         return commentRepository.findById(commentId)
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
     }
+
+//    public Page<Comment> getCommentListByDesc(Pageable pageable, Long id){
+//        Page<Comment> commentPage = commentRepository.getCommentListByDesc(pageable, )
+//    }
 
     public List<Comment> findCommentsByPostId(Long postId) {
         return commentRepository.findByPostId(postId);

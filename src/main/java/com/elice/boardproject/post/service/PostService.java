@@ -1,6 +1,8 @@
 package com.elice.boardproject.post.service;
 
 import com.elice.boardproject.board.service.BoardService;
+import com.elice.boardproject.comment.entity.Comment;
+import com.elice.boardproject.comment.repository.CommentRepository;
 import com.elice.boardproject.post.entity.PostPostDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +24,13 @@ import java.util.Optional;
 public class PostService {
     
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     private final BoardService boardService;
 
-    public PostService(PostRepository postRepository, BoardService boardService) {
+    public PostService(PostRepository postRepository, BoardService boardService,CommentRepository commentRepository) {
         this.boardService = boardService;
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     public Page<Post> findPostsByBoardAndKeyword(Board board, String keyword, PageRequest pageRequest) {
@@ -68,10 +72,19 @@ public class PostService {
         return postRepository.save(foundPost);
     }
 
+//    public void deletePost(Long id) {
+//        Post foundPost = postRepository.findById(id)
+//                            .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
+//
+//        postRepository.delete(foundPost);
+//    }
+    @Transactional
     public void deletePost(Long id) {
         Post foundPost = postRepository.findById(id)
-                            .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
 
+        commentRepository.deleteAll(foundPost.getComments());
         postRepository.delete(foundPost);
     }
 }
+
