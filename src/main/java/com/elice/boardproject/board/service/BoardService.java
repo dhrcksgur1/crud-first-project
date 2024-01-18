@@ -15,7 +15,7 @@ import com.elice.boardproject.global.exception.ServiceLogicException;
 public class BoardService {
     
     private final BoardRepository boardRepository;
-    private Board foundBoard;
+    private Board board;
 
     public BoardService(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
@@ -40,22 +40,22 @@ public class BoardService {
     }
 
     public Board updateBoard(Long boardId, BoardPostDto boardPostDto) {
-        foundBoard = boardRepository.findById(boardId)
+        board = boardRepository.findById(boardId)
                                     .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
 
         Optional.ofNullable(boardPostDto.getName())
-                .ifPresent(name -> { foundBoard = foundBoard.toBuilder().name(name).build(); });
+                .ifPresent(name -> { board = board.toBuilder().name(name).build(); });
 
-        foundBoard = foundBoard.toBuilder().description(boardPostDto.getDescription()).build();
+        board = board.toBuilder().description(boardPostDto.getDescription()).build();
         
-        return boardRepository.update(foundBoard);
+        return boardRepository.update(board);
     }
 
     public void deleteBoard(Long id) {
-        foundBoard = boardRepository.findById(id)
+        board = boardRepository.findById(id)
                                     .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
         
-        boardRepository.delete(foundBoard);
+        boardRepository.delete(board);
     }
 
 }

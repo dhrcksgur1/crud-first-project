@@ -15,6 +15,10 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    //추가
+//    @GetMapping
+//    public String getComment(@ModelAttribute CommentDto commentDto, @)
+
     @PostMapping
     public String createComment(@ModelAttribute CommentDto commentDto, @RequestParam Long postId, RedirectAttributes redirectAttributes) {
         commentService.createComment(postId, commentDto);
