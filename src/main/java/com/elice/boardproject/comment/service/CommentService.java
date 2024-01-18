@@ -21,6 +21,13 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
+
+
+    //페이지네이션
+    public Page<Comment> getCommentListByDesc(Post post, Pageable pageable){
+        return commentRepository.getComments(post, pageable);
+    }
+
     public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
@@ -34,10 +41,6 @@ public class CommentService {
         return commentRepository.findById(commentId)
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
     }
-
-//    public Page<Comment> getCommentListByDesc(Pageable pageable, Long id){
-//        Page<Comment> commentPage = commentRepository.getCommentListByDesc(pageable, )
-//    }
 
     public List<Comment> findCommentsByPostId(Long postId) {
         return commentRepository.findByPostId(postId);

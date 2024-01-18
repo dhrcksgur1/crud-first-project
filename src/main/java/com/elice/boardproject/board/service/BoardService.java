@@ -44,7 +44,7 @@ public class BoardService {
                                     .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
 
         Optional.ofNullable(boardPostDto.getName())
-                .ifPresent(name -> { board = board.toBuilder().name(name).build(); });
+                .ifPresent(name -> board = board.toBuilder().name(name).build());
 
         board = board.toBuilder().description(boardPostDto.getDescription()).build();
         
