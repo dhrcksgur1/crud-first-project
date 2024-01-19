@@ -4,21 +4,27 @@ import java.util.List;
 import java.util.Optional;
 
 import com.elice.boardproject.board.entity.BoardPostDto;
+import com.elice.boardproject.post.entity.Post;
+import com.elice.boardproject.post.repository.PostRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.elice.boardproject.board.entity.Board;
 import com.elice.boardproject.board.repository.BoardRepository;
 import com.elice.boardproject.global.exception.ExceptionCode;
 import com.elice.boardproject.global.exception.ServiceLogicException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BoardService {
     
     private final BoardRepository boardRepository;
     private Board board;
+    private PostRepository postRepository;
 
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository, PostRepository postRepository) {
         this.boardRepository = boardRepository;
+        this.postRepository = postRepository;
     }
 
     public List<Board> findBoards() {
@@ -51,11 +57,13 @@ public class BoardService {
         return boardRepository.update(board);
     }
 
+    @Transactional
     public void deleteBoard(Long id) {
         board = boardRepository.findById(id)
                                     .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
-        
+        postRepository.deleteAll(board.getPosts());
         boardRepository.delete(board);
     }
-
 }
+
+

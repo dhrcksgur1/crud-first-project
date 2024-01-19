@@ -72,7 +72,6 @@ public class BoardRepository {
                     .createdAt(createdAt)
                     .build();
     }
-    
     public Board update(Board board) {
         String updateSql = "UPDATE board SET name = ?, description = ? WHERE id = ?";
         jdbcTemplate.update(updateSql, board.getName(), board.getDescription(), board.getId());
@@ -84,5 +83,4 @@ public class BoardRepository {
         String sql = "DELETE FROM board WHERE id = ?";
         jdbcTemplate.update(sql, board.getId());
     }
-
 }

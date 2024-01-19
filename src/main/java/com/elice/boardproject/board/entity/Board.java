@@ -36,8 +36,9 @@ public class Board {
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "board")
-    final private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     public Board(String name, String description) {
         this.name = name;

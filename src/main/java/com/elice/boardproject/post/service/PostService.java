@@ -19,8 +19,8 @@ import com.elice.boardproject.global.exception.ServiceLogicException;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @Transactional
+@Service
 public class PostService {
     
     private final PostRepository postRepository;
@@ -32,6 +32,7 @@ public class PostService {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
     }
+
     public Page<Post> findPostsByBoardAndKeyword(Board board, String keyword, PageRequest pageRequest) {
         if (keyword != null && !keyword.isEmpty()) {
             return postRepository.findAllByBoardAndTitleContaining(board, keyword, pageRequest);
@@ -53,9 +54,8 @@ public class PostService {
             postPostDto.getTitle(),
             postPostDto.getContent()
         );
-        Post savedPost = postRepository.save(post);
 
-        return savedPost;
+        return postRepository.save(post);
     }
 
     public Post updatePost(PostPostDto postPostDto, Long postId) {
@@ -70,18 +70,11 @@ public class PostService {
         return postRepository.save(foundPost);
     }
 
-//    public void deletePost(Long id) {
-//        Post foundPost = postRepository.findById(id)
-//                            .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
-//
-//        postRepository.delete(foundPost);
-//    }
     @Transactional
     public void deletePost(Long id) {
         Post foundPost = postRepository.findById(id)
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
-
-        commentRepository.deleteAll(foundPost.getComments());
+//        commentRepository.deleteAll(foundPost.getComments());
         postRepository.delete(foundPost);
     }
 }

@@ -1,15 +1,11 @@
 package com.elice.boardproject.comment.controller;
 
-import com.elice.boardproject.board.entity.Board;
+import com.elice.boardproject.board.service.BoardService;
 import com.elice.boardproject.comment.entity.Comment;
 import com.elice.boardproject.comment.entity.CommentDto;
 import com.elice.boardproject.comment.service.CommentService;
-import com.elice.boardproject.post.entity.Post;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CommentController {
 
     private final CommentService commentService;
+    private final BoardService boardService;
+
 
     @PostMapping
     public String createComment(@ModelAttribute CommentDto commentDto, @RequestParam Long postId, RedirectAttributes redirectAttributes) {

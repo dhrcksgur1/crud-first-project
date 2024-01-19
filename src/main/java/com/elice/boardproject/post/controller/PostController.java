@@ -10,14 +10,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-
 
 @Controller
 @AllArgsConstructor
@@ -25,24 +21,16 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final BoardService boardService;
     private final CommentService commentService;
-
-//    @GetMapping("/{postId}")
-//    public String getPostDetail(@PathVariable Long postId, Model model) {
-//        Post post = postService.findPost(postId);
-//        model.addAttribute("post", post);
-//        List<Comment> comments = commentService.findCommentsByPostId(postId);
-//        model.addAttribute("comments", comments);
-//        return "post/post";
-//    }
+    private final BoardService boardService;
 
     @GetMapping("/create")
     public String createPost(@RequestParam Long boardId, Model model) {
         model.addAttribute("boardId", boardId);
         return "post/createPost";
     }
-    //페이지네이션
+
+    //Pagination
     @GetMapping("/{postId}")
     public String getPostDetail(@PathVariable Long postId,
                                 @RequestParam(defaultValue = "0") int page,
@@ -51,25 +39,10 @@ public class PostController {
         Post post = postService.findPost(postId);
         Pageable pageable = PageRequest.of(page, size);
         Page<Comment> comments = commentService.getCommentListByDesc(post, pageable);
-//        List<Comment> comments = commentService.findCommentsByPostId(postId);
         model.addAttribute("post", post);
         model.addAttribute("comments", comments);
         return "post/post";
     }
-//    @GetMapping("/{postId}")
-//    public String getComments(@PathVariable Long postId,
-//                                     @RequestParam(defaultValue = "0") int page,
-//                                     @RequestParam(defaultValue = "10") int size,
-//                                     Model model) {
-//
-//        Pageable pageable = PageRequest.of(page, size);
-//        Page<Comment> post = commentService.getCommentListByDesc(postId, pageable);
-//
-//        model.addAttribute("post", post);
-//        model.addAttribute("postId", postId);
-//
-//        return "post/post";
-//    }
 
     @PostMapping("/create")
     public String createPostPost(@ModelAttribute PostPostDto postPostDto, @RequestParam Long boardId) {

@@ -4,7 +4,6 @@ import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.global.entity.BaseEntity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

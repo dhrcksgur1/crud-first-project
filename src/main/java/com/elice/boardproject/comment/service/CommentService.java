@@ -21,32 +21,19 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-
-
-    //페이지네이션
+    //Pagenation
     public Page<Comment> getCommentListByDesc(Post post, Pageable pageable){
-        return commentRepository.findByPost(post, pageable);
+        return commentRepository.findAllByPostOrderByCreatedAtDesc(post, pageable);
     }
 
     public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
     }
-
-    public List<Comment> findComments() {
-        return commentRepository.findAll();
-    }
-
-    public Comment findComment(Long commentId) {
-        return commentRepository.findById(commentId)
-                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
-    }
-
     public List<Comment> findCommentsByPostId(Long postId) {
         return commentRepository.findByPostId(postId);
     }
-
-    public Comment createComment(Long postId, CommentDto commentDto) {
+    public void createComment(Long postId, CommentDto commentDto) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
         log.info(post.getTitle());
 
@@ -55,7 +42,7 @@ public class CommentService {
             commentDto.getContent()
         );
 
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
     }
 
     public Comment updateComment(Long commentId, CommentDto commentDto) {
@@ -74,4 +61,5 @@ public class CommentService {
 
         commentRepository.delete(foundcomment);
     }
+
 }

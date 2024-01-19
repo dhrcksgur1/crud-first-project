@@ -40,9 +40,6 @@ public class BoardController {
         return "board/boards";
     }
 
-    /*
-     comment 키워드 검색 기능 추가
-     */
     @GetMapping("/{boardId}")
     public String getBoard(@PathVariable(name = "boardId") Long boardId,
                            @RequestParam(defaultValue = "0") int page,
