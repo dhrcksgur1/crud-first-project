@@ -32,7 +32,6 @@ public class PostService {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
     }
-
     public Page<Post> findPostsByBoardAndKeyword(Board board, String keyword, PageRequest pageRequest) {
         if (keyword != null && !keyword.isEmpty()) {
             return postRepository.findAllByBoardAndTitleContaining(board, keyword, pageRequest);
@@ -54,7 +53,6 @@ public class PostService {
             postPostDto.getTitle(),
             postPostDto.getContent()
         );
-
         Post savedPost = postRepository.save(post);
 
         return savedPost;
