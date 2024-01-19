@@ -61,7 +61,6 @@ public class BoardService {
     public void deleteBoard(Long id) {
         board = boardRepository.findById(id)
                                     .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
-        postRepository.deleteAll(board.getPosts());
         boardRepository.delete(board);
     }
 }

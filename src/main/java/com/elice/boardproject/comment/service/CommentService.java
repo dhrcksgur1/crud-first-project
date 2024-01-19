@@ -37,11 +37,7 @@ public class CommentService {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
         log.info(post.getTitle());
 
-        Comment comment = new Comment(
-            post,
-            commentDto.getContent()
-        );
-
+        Comment comment = new Comment(post, commentDto.getContent());
         commentRepository.save(comment);
     }
 

@@ -4,8 +4,10 @@ import com.elice.boardproject.board.service.BoardService;
 import com.elice.boardproject.comment.entity.Comment;
 import com.elice.boardproject.comment.entity.CommentDto;
 import com.elice.boardproject.comment.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,9 +21,10 @@ public class CommentController {
 
 
     @PostMapping
-    public String createComment(@ModelAttribute CommentDto commentDto, @RequestParam Long postId, RedirectAttributes redirectAttributes) {
+    public String createComment(@Valid @ModelAttribute CommentDto commentDto, @RequestParam Long postId, RedirectAttributes redirectAttributes) {
         commentService.createComment(postId, commentDto);
         redirectAttributes.addAttribute("postId", postId);
+
         return "redirect:/posts/{postId}";
     }
 
