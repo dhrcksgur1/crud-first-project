@@ -56,18 +56,18 @@
           <small
             class="text-secondary"
             id="commentsCount"
-            th:text="${comments.size()}"
+            th:text="${comments.content.size()}"
             >0</small
           >
         </h4>
         <div
           class="container p-0 d-flex flex-column align-items-start gap-2"
-          th:unless="${#lists.isEmpty(comments)}"
+          th:unless="${#lists.isEmpty(comments.content)}"
         >
           <div
             class="card comment"
             style="min-width: 30%"
-            th:each="comment : ${comments}"
+            th:each="comment : ${comments.content}"
           >
             <div class="card-body position-relative">
               <p class="mb-2" th:text="${comment.content}">댓글 내용</p>

@@ -25,7 +25,7 @@ public class CommentService {
 
     //페이지네이션
     public Page<Comment> getCommentListByDesc(Post post, Pageable pageable){
-        return commentRepository.getComments(post, pageable);
+        return commentRepository.findByPost(post, pageable);
     }
 
     public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
