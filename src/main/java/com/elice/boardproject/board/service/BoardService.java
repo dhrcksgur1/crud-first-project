@@ -1,19 +1,18 @@
 package com.elice.boardproject.board.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.elice.boardproject.board.entity.BoardPostDto;
-import com.elice.boardproject.post.entity.Post;
-import com.elice.boardproject.post.repository.PostRepository;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Service;
-
 import com.elice.boardproject.board.entity.Board;
+import com.elice.boardproject.board.entity.BoardPostDto;
+import com.elice.boardproject.board.repository.BoardCustomRepository;
 import com.elice.boardproject.board.repository.BoardRepository;
 import com.elice.boardproject.global.exception.ExceptionCode;
 import com.elice.boardproject.global.exception.ServiceLogicException;
+import com.elice.boardproject.post.repository.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -21,6 +20,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private Board board;
     private PostRepository postRepository;
+    private BoardCustomRepository boardCustomRepository;
 
     public BoardService(BoardRepository boardRepository, PostRepository postRepository) {
         this.boardRepository = boardRepository;
@@ -59,10 +59,17 @@ public class BoardService {
 
     @Transactional
     public void deleteBoard(Long id) {
-        board = boardRepository.findById(id)
-                                    .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
-        postRepository.deleteAll(board.getPosts());
-        boardRepository.delete(board);
+        Optional<Board> board = boardCustomRepository.findById(id);
+        if (board.isEmpty()) {
+            throw new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND);
+        }
+
+        boardCustomRepository.delete(board.get());
+
+//        board = boardRepository.findById(id)
+//                                    .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
+//        postRepository.deleteAll(board.getPosts());
+//        boardRepository.delete(board);
     }
 }
 
