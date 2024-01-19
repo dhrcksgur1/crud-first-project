@@ -7,7 +7,6 @@ import com.elice.boardproject.board.repository.BoardRepository;
 import com.elice.boardproject.global.exception.ExceptionCode;
 import com.elice.boardproject.global.exception.ServiceLogicException;
 import com.elice.boardproject.post.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +21,10 @@ public class BoardService {
     private PostRepository postRepository;
     private BoardCustomRepository boardCustomRepository;
 
-    public BoardService(BoardRepository boardRepository, PostRepository postRepository) {
+    public BoardService(BoardRepository boardRepository, PostRepository postRepository, BoardCustomRepository boardCustomRepository) {
         this.boardRepository = boardRepository;
         this.postRepository = postRepository;
+        this.boardCustomRepository = boardCustomRepository;
     }
 
     public List<Board> findBoards() {

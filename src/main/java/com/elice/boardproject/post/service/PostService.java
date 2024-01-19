@@ -74,7 +74,6 @@ public class PostService {
     public void deletePost(Long id) {
         Post foundPost = postRepository.findById(id)
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
-//        commentRepository.deleteAll(foundPost.getComments());
         postRepository.delete(foundPost);
     }
 }
