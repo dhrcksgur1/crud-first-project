@@ -49,8 +49,6 @@ public class BoardController {
                            @RequestParam(defaultValue = "0") int page,
                            @RequestParam(defaultValue = "10") int size,
                            @RequestParam(required = false) String keyword,
-                           //추가
-                           @RequestParam(required = false) String error,
                            Model model) {
         Board board = boardService.findBoardById(boardId);
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -59,12 +57,16 @@ public class BoardController {
         model.addAttribute("board", board);
         model.addAttribute("keyword", keyword);
         model.addAttribute("postPage", postPage);
-        model.addAttribute("error",error);
+
         return "board/board";
     }
     
-    @GetMapping("/create")
-    public String createBoard() {
+    @GetMapping("/createBoard")
+    public String create(
+        @RequestParam(required = false) String error,
+        Model model
+    ) {
+        model.addAttribute("error",error);
         return "board/createBoard";
     }
 
@@ -76,12 +78,14 @@ public class BoardController {
 //    }
 
     @PostMapping("/create")
-    public String createBoardPost(@Valid @ModelAttribute BoardPostDto boardPostDto, BindingResult bindingResult, RedirectAttributes redirectAttributes
+    public String create(
+        @ModelAttribute @Valid BoardPostDto boardPostDto,
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
-
         if(bindingResult.hasErrors()) {
             redirectAttributes.addAttribute("error", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
-            return "redirect:/boards";
+            return "redirect:/boards/createBoard";
         }
 
         boardService.createBoard(boardPostDto);
