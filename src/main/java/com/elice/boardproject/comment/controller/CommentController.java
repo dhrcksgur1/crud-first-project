@@ -7,24 +7,34 @@ import com.elice.boardproject.comment.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/comments")
 public class CommentController {
-
     private final CommentService commentService;
     private final BoardService boardService;
 
-
     @PostMapping
-    public String createComment(@Valid @ModelAttribute CommentDto commentDto, @RequestParam Long postId, RedirectAttributes redirectAttributes) {
-        commentService.createComment(postId, commentDto);
+    public String createComment(
+            @Valid @ModelAttribute CommentDto commentDto,
+            BindingResult bindingResult,
+            @RequestParam Long postId,
+            RedirectAttributes redirectAttributes
+    ) {
         redirectAttributes.addAttribute("postId", postId);
 
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addAttribute("error", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+            return "redirect:/posts/{postId}";
+        }
+
+        commentService.createComment(postId, commentDto);
         return "redirect:/posts/{postId}";
     }
 
