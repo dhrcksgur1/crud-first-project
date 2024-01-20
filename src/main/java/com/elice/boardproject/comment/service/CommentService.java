@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,9 +29,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
     }
-    public List<Comment> findCommentsByPostId(Long postId) {
-        return commentRepository.findByPostId(postId);
-    }
+
     public void createComment(Long postId, CommentDto commentDto) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
         log.info(post.getTitle());

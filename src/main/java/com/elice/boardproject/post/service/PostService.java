@@ -1,12 +1,9 @@
 package com.elice.boardproject.post.service;
 
 import com.elice.boardproject.board.service.BoardService;
-import com.elice.boardproject.comment.entity.Comment;
-import com.elice.boardproject.comment.repository.CommentRepository;
 import com.elice.boardproject.post.entity.PostPostDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +13,6 @@ import com.elice.boardproject.post.repository.PostRepository;
 import com.elice.boardproject.global.exception.ExceptionCode;
 import com.elice.boardproject.global.exception.ServiceLogicException;
 
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -24,13 +20,11 @@ import java.util.Optional;
 public class PostService {
     
     private final PostRepository postRepository;
-    private final CommentRepository commentRepository;
     private final BoardService boardService;
 
-    public PostService(PostRepository postRepository, BoardService boardService,CommentRepository commentRepository) {
+    public PostService(PostRepository postRepository, BoardService boardService) {
         this.boardService = boardService;
         this.postRepository = postRepository;
-        this.commentRepository = commentRepository;
     }
 
     public Page<Post> findPostsByBoardAndKeyword(Board board, String keyword, PageRequest pageRequest) {

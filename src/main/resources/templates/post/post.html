@@ -334,6 +334,7 @@
         fetch(`/comments/${currentComment}`, {
           method: "DELETE",
         }).then(() => elementToDelete.remove());
+        //).then(() => (window.location.href = `/posts${currentComment}`));
 
         const commentsCount = document.getElementById("commentsCount");
         commentsCount.innerText = parseInt(commentsCount.innerText) - 1;

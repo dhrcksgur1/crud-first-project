@@ -57,15 +57,13 @@ public class BoardService {
         return boardRepository.update(board);
     }
 
+    //persist 방식을 위한 코드 변경
     @Transactional
     public void deleteBoard(Long id) {
-        Optional<Board> board = boardCustomRepository.findById(id);
-        if (board.isEmpty()) {
-            throw new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND);
-        }
+        Board board = boardCustomRepository.findById(id)
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
 
-        boardCustomRepository.delete(board.get());
-
+        boardCustomRepository.delete(board);
 //        board = boardRepository.findById(id)
 //                                    .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
 //        postRepository.deleteAll(board.getPosts());

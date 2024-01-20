@@ -1,6 +1,5 @@
 package com.elice.boardproject.post.controller;
 
-import com.elice.boardproject.board.service.BoardService;
 import com.elice.boardproject.comment.entity.Comment;
 import com.elice.boardproject.comment.service.CommentService;
 import com.elice.boardproject.post.entity.Post;
@@ -22,7 +21,6 @@ public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
-    private final BoardService boardService;
 
     @GetMapping("/create")
     public String createPost(@RequestParam Long boardId, Model model) {

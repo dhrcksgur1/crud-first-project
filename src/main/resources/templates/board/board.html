@@ -41,6 +41,8 @@
         ></p>
       </div>
       <div class="d-flex w-100 justify-content-between mb-3">
+        <!--  에러메시지  추가-->
+        <span style="color:red" th:if="${error}" th:text="${error}"></span>
         <form>
           <div class="input-group">
             <input

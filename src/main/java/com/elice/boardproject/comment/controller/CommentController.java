@@ -18,7 +18,6 @@ import java.util.Objects;
 @RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
-    private final BoardService boardService;
 
     @PostMapping
     public String createComment(

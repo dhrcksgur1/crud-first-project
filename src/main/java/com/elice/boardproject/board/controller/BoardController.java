@@ -1,11 +1,14 @@
 package com.elice.boardproject.board.controller;
 
 import java.util.List;
+import java.util.Objects;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/boards")
@@ -45,6 +49,8 @@ public class BoardController {
                            @RequestParam(defaultValue = "0") int page,
                            @RequestParam(defaultValue = "10") int size,
                            @RequestParam(required = false) String keyword,
+                           //추가
+                           @RequestParam(required = false) String error,
                            Model model) {
         Board board = boardService.findBoardById(boardId);
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -53,18 +59,32 @@ public class BoardController {
         model.addAttribute("board", board);
         model.addAttribute("keyword", keyword);
         model.addAttribute("postPage", postPage);
+        model.addAttribute("error",error);
         return "board/board";
     }
     
     @GetMapping("/create")
-    public String createBoard(Model model) {
+    public String createBoard() {
         return "board/createBoard";
     }
 
-    @PostMapping("/create")
-    public String createBoardPost(@ModelAttribute BoardPostDto boardPostDto) {
-        boardService.createBoard(boardPostDto);
+//    @PostMapping("/create")
+//    public String createBoardPost(@ModelAttribute BoardPostDto boardPostDto) {
+//        boardService.createBoard(boardPostDto);
+//
+//        return "redirect:/boards";
+//    }
 
+    @PostMapping("/create")
+    public String createBoardPost(@Valid @ModelAttribute BoardPostDto boardPostDto, BindingResult bindingResult, RedirectAttributes redirectAttributes
+    ) {
+
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addAttribute("error", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+            return "redirect:/boards";
+        }
+
+        boardService.createBoard(boardPostDto);
         return "redirect:/boards";
     }
 
