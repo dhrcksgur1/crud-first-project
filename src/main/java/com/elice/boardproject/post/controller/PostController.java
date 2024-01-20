@@ -35,12 +35,14 @@ public class PostController {
     public String getPostDetail(@PathVariable Long postId,
                                 @RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "10") int size,
+                                @RequestParam(required = false) String error,
                                 Model model) {
         Post post = postService.findPost(postId);
         Pageable pageable = PageRequest.of(page, size);
         Page<Comment> comments = commentService.getCommentListByDesc(post, pageable);
         model.addAttribute("post", post);
         model.addAttribute("comments", comments);
+        model.addAttribute("error", error);
         return "post/post";
     }
 

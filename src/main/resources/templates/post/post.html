@@ -104,6 +104,8 @@
 <!--          >댓글이 없습니다.</span-->
 <!--        >-->
 
+        <span style="color:red" th:if="${error}" th:text="${error}"></span>
+
         <form
           class="mt-3 row"
           th:action="@{/comments(postId=${post.id})}"
