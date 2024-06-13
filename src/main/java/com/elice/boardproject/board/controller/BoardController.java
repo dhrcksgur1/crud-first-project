@@ -63,26 +63,13 @@ public class BoardController {
     
     @GetMapping("/createBoard")
     public String create(
-        @RequestParam(required = false) String error,
-        Model model
-    ) {
+        @RequestParam(required = false) String error, Model model) {
         model.addAttribute("error",error);
         return "board/createBoard";
     }
 
-//    @PostMapping("/create")
-//    public String createBoardPost(@ModelAttribute BoardPostDto boardPostDto) {
-//        boardService.createBoard(boardPostDto);
-//
-//        return "redirect:/boards";
-//    }
-
     @PostMapping("/create")
-    public String create(
-        @ModelAttribute @Valid BoardPostDto boardPostDto,
-        BindingResult bindingResult,
-        RedirectAttributes redirectAttributes
-    ) {
+    public String create(@ModelAttribute @Valid BoardPostDto boardPostDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addAttribute("error", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             return "redirect:/boards/createBoard";
@@ -101,10 +88,7 @@ public class BoardController {
     }
 
     @PostMapping("/{boardId}/edit")
-    public String editBoardPost(
-        @PathVariable(name = "boardId") Long boardId,
-        @ModelAttribute BoardPostDto boardPostDto
-    ) {
+    public String editBoardPost(@PathVariable(name = "boardId") Long boardId, @ModelAttribute BoardPostDto boardPostDto) {
         boardService.updateBoard(boardId, boardPostDto);
 
         return "redirect:/boards";

@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
-//@SpringBootApplication
-@SpringBootApplication(exclude={BatchAutoConfiguration.class})
+@SpringBootApplication
+//@SpringBootApplication(exclude={BatchAutoConfiguration.class})
 
 public class BoardprojectApplication {
 

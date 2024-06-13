@@ -10,7 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostPostDto {
 
-    @NotBlank(message = "공백입력x")
+    @NotBlank(message = "공백은 입력되지 않습니다.")
     private String title;
+    @NotBlank(message = "공백은 입력되지 않습니다.")
     private String content;
 }

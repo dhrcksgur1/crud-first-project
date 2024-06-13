@@ -42,7 +42,7 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    //양방향 연관관계를 보다 안전하게 매핑하기 위한 setter 메서드
+    //양방향 연관관계를 보다 안전하게 매핑하기 위함
     public void setBoard(Board board) {
         this.board = board;
         if (!this.board.getPosts().contains(this)) {

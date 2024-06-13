@@ -79,8 +79,4 @@ public class BoardRepository {
         return board;
     }
 
-    public void delete(Board board) {
-        String sql = "DELETE FROM board WHERE id = ?";
-        jdbcTemplate.update(sql, board.getId());
-    }
 }

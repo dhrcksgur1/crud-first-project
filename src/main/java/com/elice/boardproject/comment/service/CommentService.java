@@ -15,12 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    //Pagenation
+
     public Page<Comment> getCommentListByDesc(Post post, Pageable pageable){
         return commentRepository.findAllByPostOrderByCreatedAtDesc(post, pageable);
     }
@@ -32,7 +31,6 @@ public class CommentService {
 
     public void createComment(Long postId, CommentDto commentDto) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
-        log.info(post.getTitle());
 
         Comment comment = new Comment(post, commentDto.getContent());
         commentRepository.save(comment);

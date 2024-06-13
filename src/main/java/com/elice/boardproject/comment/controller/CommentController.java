@@ -20,12 +20,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public String createComment(
-            @Valid @ModelAttribute CommentDto commentDto,
-            BindingResult bindingResult,
-            @RequestParam Long postId,
-            RedirectAttributes redirectAttributes
-    ) {
+    public String createComment(@Valid @ModelAttribute CommentDto commentDto, BindingResult bindingResult, @RequestParam Long postId, RedirectAttributes redirectAttributes) {
         redirectAttributes.addAttribute("postId", postId);
 
         if(bindingResult.hasErrors()) {

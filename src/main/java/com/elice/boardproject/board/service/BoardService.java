@@ -18,12 +18,10 @@ public class BoardService {
     
     private final BoardRepository boardRepository;
     private Board board;
-    private PostRepository postRepository;
     private BoardCustomRepository boardCustomRepository;
 
-    public BoardService(BoardRepository boardRepository, PostRepository postRepository, BoardCustomRepository boardCustomRepository) {
+    public BoardService(BoardRepository boardRepository , BoardCustomRepository boardCustomRepository) {
         this.boardRepository = boardRepository;
-        this.postRepository = postRepository;
         this.boardCustomRepository = boardCustomRepository;
     }
 
@@ -64,10 +62,6 @@ public class BoardService {
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
 
         boardCustomRepository.delete(board);
-//        board = boardRepository.findById(id)
-//                                    .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
-//        postRepository.deleteAll(board.getPosts());
-//        boardRepository.delete(board);
     }
 }
 
