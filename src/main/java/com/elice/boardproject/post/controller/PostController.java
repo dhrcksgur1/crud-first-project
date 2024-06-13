@@ -5,6 +5,7 @@ import com.elice.boardproject.comment.service.CommentService;
 import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.post.entity.PostPostDto;
 import com.elice.boardproject.post.service.PostService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,7 +46,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String createPostPost(@ModelAttribute PostPostDto postPostDto, @RequestParam Long boardId) {
+    public String createPostPost(@Valid @ModelAttribute PostPostDto postPostDto, @RequestParam Long boardId) {
         Post createdPost = postService.createPost(postPostDto, boardId);
         return "redirect:/boards/" + createdPost.getBoard().getId();
     }
