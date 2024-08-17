@@ -1,8 +1,5 @@
 # <center>유기견 입양 게시판 프로젝트</center>
 
-
-## **서비스 목적**
-**유기견 입양 게시판**
 <br></br>
 ## 서비스 목표
 - 유기견들의 안전한 입양을 위함
@@ -22,18 +19,23 @@
 <br></br>
 - **게시판 추가**
 ![image](https://github.com/user-attachments/assets/45f52e4a-76cb-4e13-bf36-2d40aa13f679)
+<br></br>
+
 - **게시판 메인화면**
 ![image](https://github.com/user-attachments/assets/1585153b-e93c-4198-b3c8-fa9adb7b2dba)
-
-- **게시 추가**
+<br></br>
+- **게시글 추가**
 ![image](https://github.com/user-attachments/assets/a655ff40-ce28-49b3-b914-3605b40112ad)
+<br></br>
+- **게시글 메인화면**
+![image](https://github.com/user-attachments/assets/84af324d-30e2-42f9-90a5-e992628b13cc)
 
 
 <br></br>
 ## 기술 스택
 <img alt="springboot" src ="https://img.shields.io/badge/springboot-6DB33F.svg?&style=for-the-badge&logo=springboot&logoColor=white"/> 
 <img alt="mysql" src ="https://img.shields.io/badge/mysql-4479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white"/> 
-<img alt="mysql" src ="https://img.shields.io/badge/thymeleaf-4479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white"/> 
+<img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white">
 
 <br></br>
 ## 도메인 별 서비스 기능 명세
